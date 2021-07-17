@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block titulo%}CRUD INVENTARIO SAP{% endblock titulo%}
+<h1>Página principal de InventarioSAP</h1>
+{% block cuerpo %}
+
+</body>
+
+<table class="table table-dark table-striped table-hover">
+    <thead>
+        <tr class="table-active">
+            <th scope="row">Código SAP</th>
+            <th>Descripción del Repuesto</th>
+            <th>Ubicación</th>
+            <th>Cantidad</th>
+            <th>Costo Unitario</th>
+            <th>Modificar</th>
+            <th>Baja</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for repuesto in object_list %}
+
+        <tr>
+            <td>{{repuesto.codigosap}}</td>
+            <td>{{repuesto.descripcion}}</td>
+            <td>{{repuesto.ubicacion}}</td>
+            <td>{{repuesto.cantidad}}</td>
+            <td>{{repuesto.costounitario}}</td>
+            <td><a href="{% url 'modificar_repuesto' repuesto.id %}">☑</a></td>
+            <td><a href="{% url 'eliminar_repuesto' repuesto.id %}">☑</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a class="btn btn-primary" href="{% url 'crear_repuesto' %}" role="button"> CREAR REPUESTO </a>
+{% endblock %}

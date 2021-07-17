@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block titulo %}CREAR REPUESTO{% endblock titulo %}
+{% block cuerpo %}
+
+
+<form method="post">
+    {% csrf_token %}
+    {{form|crispy}}
+    <button type="submit" class="btn btn-primary">CREAR o MODIFICAR </button>
+</form>
+
+
+{% endblock cuerpo %}
