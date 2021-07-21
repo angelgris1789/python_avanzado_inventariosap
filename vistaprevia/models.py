@@ -1,4 +1,3 @@
-from django.core import mail
 from django.db import models
 from django.core.mail import send_mail
 import time

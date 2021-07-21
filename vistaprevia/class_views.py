@@ -9,11 +9,10 @@ Módulo Que contiene clases para el CRUD.
 
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from django.urls import reverse_lazy
-from .form import Repuestosform
-from .models import CellObservador, Inventariosap
-from .models import TemaConcreto,MailObservador
 from django.http import HttpResponseRedirect
-
+from vistaprevia.form import Repuestosform
+from vistaprevia.models import CellObservador, Inventariosap
+from vistaprevia.models import MailObservador
 
 
 temarepuestos = Inventariosap()
@@ -29,7 +28,7 @@ Observadores_c = CellObservador(temarepuestos)
 Observadores_c.numero = '54_92235655963'
 
 
-class Repuesto_list(ListView):
+class Repuestolist(ListView):
     """
     Clase que realiza la visualización de repuestos
     en pantalla de inicio.
@@ -42,7 +41,7 @@ class Repuesto_list(ListView):
         return self.model.objects.all().order_by("-id")[:10]
 
 
-class Repuesto_crear(CreateView):
+class Repuestocrear(CreateView):
     """
     Clase que toma los datos ingresados por usuario, realiza el insert en
     la base de datos y retorna a la pantalla de inicio
@@ -52,25 +51,7 @@ class Repuesto_crear(CreateView):
     template_name = "crear_repuesto.html"
     success_url = reverse_lazy("inicio")
 
-'''
-funcion para enviar mail
-
-from django.conf import settings
-
-
-def send_email(mail):
-    Context = {'mail':mail}
-    content = template.render(Context)
-    email = EmailMultiAlternatives('Un correo de prueba','Alejo',
-    setting.EMAIL_HOST_USER,
-    [mail]
-    )
-    email.attach_alternative(content, 'text/html')
-    email.send()
-
-'''
-
-class Repuesto_modificar(UpdateView):
+class Repuestomodificar(UpdateView):
     """
     Clase que nos permite modificar los datos de un repuesto,
     los actualiza en la base de datos y retorna a la pantalla de inicio
@@ -81,7 +62,7 @@ class Repuesto_modificar(UpdateView):
     success_url = reverse_lazy("inicio")
 
 
-class Repuesto_eliminar(DeleteView):
+class Repuestoeliminar(DeleteView):
     """
     Eliminar el repuesto y actualiza el listado en la pantalla de inicio
     """
@@ -97,11 +78,7 @@ class Repuesto_eliminar(DeleteView):
         Notifico eliminación a todos los observadores
         """
         self.object = self.get_object()
-        success_url = self.get_success_url()
         self.object.delete()
-        temarepuestos.set_estado(1,self.object)
-        return HttpResponseRedirect(success_url)
+        temarepuestos.set_estado(1, self.object)
+        return HttpResponseRedirect(self.success_url)
     
-    
-    
-

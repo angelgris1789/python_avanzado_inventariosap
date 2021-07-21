@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from vistaprevia.class_views import Repuesto_crear, Repuesto_eliminar, Repuesto_list, Repuesto_modificar
+from vistaprevia.class_views import Repuestocrear, Repuestoeliminar, Repuestolist, Repuestomodificar
 
 
 '''
@@ -25,9 +25,9 @@ repuestos del Inventario
 '''
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',Repuesto_list.as_view(),name='inicio'),
-    path('crear_repuesto',Repuesto_crear.as_view(), name='crear_repuesto'),
-    path('modificar_repuesto/<int:pk>/',Repuesto_modificar.as_view(),name='modificar_repuesto'),
-    path('eliminar_repuesto/<int:pk>/',Repuesto_eliminar.as_view(),name='eliminar_repuesto')
+    path('',Repuestolist.as_view(),name='inicio'),
+    path('crear_repuesto',Repuestocrear.as_view(), name='crear_repuesto'),
+    path('modificar_repuesto/<int:pk>/',Repuestomodificar.as_view(),name='modificar_repuesto'),
+    path('eliminar_repuesto/<int:pk>/',Repuestoeliminar.as_view(),name='eliminar_repuesto')
 
 ]
