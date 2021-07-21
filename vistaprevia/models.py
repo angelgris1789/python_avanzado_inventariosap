@@ -1,6 +1,9 @@
 from django.core import mail
 from django.db import models
 from django.core.mail import send_mail
+import time
+import pyautogui as pg
+import webbrowser as web
 
 """
 Se crea la clase inventario, con los datos relevantes
@@ -79,6 +82,35 @@ class MailObservador(Observador):
         mensaje = 'Se ha eliminado el repuesto '+str(obj)+' en forma definitiva.'
         send_mail('BAJA DE REPUESTO',mensaje,'alejolucerofenoglio@gmail.com',
             ['"'+mail+'"'],fail_silently=False)
+        
+    def __str__(self):
+        return self.mail
+
+
+class CellObservador(Observador):
+    '''
+    Defino la clase MailObservador para conformar el mensaje y enviar el mail
+    ante la solicitud de actualización del objeto eliminado
+    '''
+    def __init__(self, obj):
+        self.observadores = obj
+        self.observadores.agregar(self)
+
+    numero = ''
+    mail = ''
+    def update(self, obj, numero):
+        '''
+        Actualizo novedad a observadores responsables del inventario vía mail
+        '''
+        mensaje = 'Se ha eliminado el repuesto '+str(obj)+' en forma definitiva.'
+        time.sleep(8)
+        web.open('https://web.whatsapp.com/send?phone='+self.numero+'&text='+mensaje)
+        pg.click(800,600)
+        time.sleep(10)
+        pg.press('enter')
+        time.sleep(6)
+        pg.hotkey('ctrl','w')
+        time.sleep(10)
         
     def __str__(self):
         return self.mail

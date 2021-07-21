@@ -10,7 +10,7 @@ Módulo Que contiene clases para el CRUD.
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from django.urls import reverse_lazy
 from .form import Repuestosform
-from .models import Inventariosap
+from .models import CellObservador, Inventariosap
 from .models import TemaConcreto,MailObservador
 from django.http import HttpResponseRedirect
 
@@ -23,10 +23,10 @@ Observadores_a.mail = 'alejolucerofenoglio@gmail.com'
 #Agrego un segundo mail de prueba como destinatario de correos
 Observadores_b = MailObservador(temarepuestos)
 Observadores_b.mail = 'asfenoglio@fi.mdp.edu.ar'
-temarepuestos.agregar(Observadores_a)
-temarepuestos.agregar(Observadores_b)
-
-
+#temarepuestos.agregar(Observadores_a)
+#temarepuestos.agregar(Observadores_b)
+Observadores_c = CellObservador(temarepuestos)
+Observadores_c.numero = '54_92235655963'
 
 
 class Repuesto_list(ListView):
