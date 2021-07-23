@@ -11,7 +11,7 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from vistaprevia.form import Repuestosform
-from vistaprevia.models import CellObservador, Inventariosap
+from vistaprevia.models import CellObservador, Inventariosap, Logobservador
 from vistaprevia.models import MailObservador
 
 
@@ -22,10 +22,12 @@ Observadores_a.mail = 'alejolucerofenoglio@gmail.com'
 #Agrego un segundo mail de prueba como destinatario de correos
 Observadores_b = MailObservador(temarepuestos)
 Observadores_b.mail = 'asfenoglio@fi.mdp.edu.ar'
-#temarepuestos.agregar(Observadores_a)
-#temarepuestos.agregar(Observadores_b)
+#Agrego un Observador como destinatario de mensjería por Whatsapp
 Observadores_c = CellObservador(temarepuestos)
 Observadores_c.numero = '54_92235655963'
+#Agrego un Observador para registrar elimiaciones en un archivo txt
+Observadores_d = Logobservador(temarepuestos)
+Observadores_d.log = 'log_eliminaciones.txt'
 
 
 class Repuestolist(ListView):
@@ -79,6 +81,6 @@ class Repuestoeliminar(DeleteView):
         """
         self.object = self.get_object()
         self.object.delete()
-        temarepuestos.set_estado(1, self.object)
+        temarepuestos.set_estado('eliminación', self.object)
         return HttpResponseRedirect(self.success_url)
     

@@ -3,6 +3,7 @@ from django.core.mail import send_mail
 import time
 import pyautogui as pg
 import webbrowser as web
+import datetime
 
 """
 Se crea la clase inventario, con los datos relevantes
@@ -49,7 +50,9 @@ class TemaConcreto(Tema):
 
     def set_estado(self, value, obj):
         self.estado = value
+        print('Se está ejecutando la '+str(self.estado)+' de '+str(obj))
         self.notificar(obj)
+        print('evento finalizado')
 
     def get_estado(self):
         return self.estado 
@@ -110,6 +113,33 @@ class CellObservador(Observador):
         time.sleep(6)
         pg.hotkey('ctrl','w')
         time.sleep(10)
+        
+    def __str__(self):
+        return self.mail
+
+class Logobservador(Observador):
+    '''
+    Defino la clase MailObservador para conformar el mensaje y enviar el mail
+    ante la solicitud de actualización del objeto eliminado
+    '''
+    def __init__(self, obj):
+        self.observadores = obj
+        self.observadores.agregar(self)
+
+    numero = ''
+    mail = ''
+    log_eliminacion = ''
+    def update(self, obj, log):
+        '''
+        Actualizo eliminación en el log
+        '''
+        print(log)
+        print(obj)
+        print(self)
+        mensaje = str(datetime.datetime.now()) + 'Se ha eliminado el repuesto ' + str(obj) + "\r"
+        log_eliminacion = open('log_eliminaciones.txt', "a")
+        log_eliminacion.write(mensaje)
+        log_eliminacion.close()
         
     def __str__(self):
         return self.mail
