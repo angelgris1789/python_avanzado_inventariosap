@@ -52,7 +52,7 @@ class TemaConcreto(Tema):
         self.estado = value
         print('Se está ejecutando la '+str(self.estado)+' de '+str(obj))
         self.notificar(obj)
-        print('evento finalizado')
+        print('Evento finalizado')
 
     def get_estado(self):
         return self.estado 
